@@ -25,6 +25,27 @@ def create_rating(movie, user, score):
 
     return movie_rating
 
+def get_movies():
+    """Return a list of all the movies."""
+    movies = db.session.query(Movie).all()
+    return movies
+
+
+def get_movie_by_id(id):
+    movie = db.session.query(Movie).filter(Movie.movie_id == id).one()
+
+    # movie = Movie.query.get(id)
+    return movie
+
+
+def get_users():
+    """Return a list of all the users."""
+    return db.session.query(User).all()
+
+
+def get_user_by_id(id):
+    """Return user by their id."""
+    return db.session.query(User).filter(User.user_id == id).one()
 
 
 if __name__ == '__main__':

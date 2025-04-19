@@ -48,6 +48,28 @@ def get_user_by_id(id):
     return db.session.query(User).filter(User.user_id == id).one()
 
 
+def get_user_by_email(email):
+    """Return user id from user email. Return None if email not found"""
+    return db.session.query(User).filter(User.email == email).first()
+    # user = User.query.get(email)
+    # print(user)
+    # return User.query.get(email)
+
+def get_movies_by_term(term):
+    term_string = f'%{term}%'
+    # print(term_string)
+    return db.session.query(Movie.title).filter(Movie.title.like(term_string)).all()
+
+
+def get_movie_by_title(title):
+    """Return movie by it's title."""
+    return db.session.query(Movie).filter(Movie.title == title).first()
+
+
+def get_user_ratings(user):
+    """Return all the ratings a user has made."""
+    return db.session.query(Rating).filter(Rating.user_id == user.user_id).all()
+
 if __name__ == '__main__':
     from server import app
     connect_to_db(app)

@@ -4,8 +4,45 @@
 
 {% block body %}
     <h1>Hello {{ user.email }}</h1>
+    <form action="/search" method="POST">
+        Search a movie to rate:
+        <input type="search" name="movie_search"></input>
+        <button type="submit">Submit</button>
+    </form>
+  
+    
+    {% if movie_list is defined  %}
+        <form action="/rate" method="POST">
+        {% for movie in movie_list %}
+            <div>
+                <label for="movie">
+                <input type="checkbox" value="{{movie.title}}" name="movie" id="movie">{{ movie.title }}</label>
+                <br/>
+                Rating:
+                <input type="text" name="{{movie.title}}" />
+                <br/>
+            </div>
+        {% endfor %}
+        <button type="submit">Submit Ratings</button>
+        </form>
+    {% endif %}
 
-    <p>
-    User ratings:
-    </p>
+    {% if user_ratings is defined %}
+        <ul>
+        {% for rating in user_ratings %}
+            <li>{{ rating.movie.title }}: {{ rating.score }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+            
+            
+            
+    
 {% endblock %}
+
+
+
+
+
+
+
